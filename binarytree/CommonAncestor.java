@@ -11,6 +11,7 @@ public class CommonAncestor {
             this.findNode = findNode;
         }
     }
+    //236
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
         Info info = process(root, p, q);
         return info.findNode;
