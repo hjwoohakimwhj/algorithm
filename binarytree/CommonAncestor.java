@@ -12,9 +12,6 @@ public class CommonAncestor {
         }
     }
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        if(root == null){
-            return null;
-        }
         Info info = process(root, p, q);
         return info.findNode;
     }
@@ -25,32 +22,48 @@ public class CommonAncestor {
         }
 
         Info leftInfo = process(x.left, p, q);
-        if(leftInfo.findNode != null){
-            return new Info(leftInfo.findObj1, leftInfo.findObj2, leftInfo.findNode);
-        }
         Info rightInfo = process(x.right, p, q);
 
+        //左子树有p和q
+        if(leftInfo.findNode != null){
+            return leftInfo;
+        }
+        //右子树有p和q
         if(rightInfo.findNode != null){
-            return new Info(rightInfo.findObj1, rightInfo.findObj2, rightInfo.findNode);
+            return rightInfo;
         }
 
-        if((leftInfo.findObj1 && rightInfo.findObj2) || (leftInfo.findObj2 && rightInfo.findObj1) || ((leftInfo.findObj1 || rightInfo.findObj1) && x == q) ||
-                ((leftInfo.findObj2 || rightInfo.findObj2) && x == p)){
+        //左右子树有p和q
+        if((leftInfo.findObj1 || rightInfo.findObj1)
+                && (leftInfo.findObj2 || rightInfo.findObj2)
+        ){
             return new Info(true, true, x);
         }
 
-        if(x == p){
-            System.out.println("x = p: p is " + x.val);
-            return new Info(true, false, null);
-        }else{
+        //左右子树有p，但没有q
+        if(leftInfo.findObj1 || rightInfo.findObj1){
             if(x == q){
-                System.out.println("x = q : q is " + x.val);
-                return new Info(false, true, null);
+                return new Info(true, true, x);
             }else{
-                //第一次提交出错的地方
-                return new Info(leftInfo.findObj1 || rightInfo.findObj1, rightInfo.findObj2 || rightInfo.findObj2, null);
+                return new Info(true, false, null);
             }
         }
+        //左右子树有q，但没有p
+        if(leftInfo.findObj2 || rightInfo.findObj2){
+            if(x == p){
+                return new Info(true, true, x);
+            }else{
+                return new Info(false, true, null);
+            }
+        }
+        //左右子树都没有p和q，检查是否x等于p或q
+        if(x == p){
+            return new Info(true, false, null);
+        }
+        if(x == q){
+            return new Info(false, true, null);
+        }
+        return new Info(false, false, null);
     }
 
     public static void main(String[] args) {
