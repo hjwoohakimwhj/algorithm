@@ -67,6 +67,8 @@ public class CommonAncestor {
         return new Info(false, false, null);
     }
 
+
+
     public static void main(String[] args) {
         CommonAncestor ancestor = new CommonAncestor();
         TreeNode treeNode = new TreeNode(-1);
