@@ -55,6 +55,38 @@ public class Swap {
         return head;
     }
 
+    //92
+    public ListNode reverseBetween(ListNode head, int m, int n) {
+        if(head == null || head.next == null){
+            return head;
+        }
+        ListNode senti = new ListNode(0);
+        senti.next = head;
+        ListNode p = senti;
+        ListNode q = head;
+        ListNode before = senti;
+        int count = 1;
+        while(count <= n){
+            if(count == m){
+                before = p;
+            }
+            if((count > m) && (count <= n)){
+                ListNode temp = q.next;
+                q.next = p;
+                p = q;
+                q = temp;
+                count++;
+                continue;
+            }
+            p = q;
+            q = q.next;
+            count++;
+        }
+        before.next.next = q;
+        before.next = p;
+        return senti.next;
+    }
+
     //206
     public ListNode reverseList(ListNode head) {
         //if(head == null || head.next == null){
