@@ -40,4 +40,28 @@ public class Code107_LevelOrderBottom {
         }
         return results;
     }
+
+    //第二次提交 使用递归 98.36% 5.31%
+    public List<List<Integer>> levelOrderBottom2(TreeNode root) {
+        List<List<Integer>> results = new LinkedList<List<Integer>>();
+        if(root == null){
+            return results;
+        }
+        process(root, 1, results);
+        return results;
+    }
+    public void process(TreeNode node, int depth, List<List<Integer>> results){
+        if(node == null){
+            return;
+        }
+        if(depth == (results.size() + 1)){
+            List<Integer> list = new ArrayList<>();
+            list.add(node.val);
+            results.add(0, list);
+        }else{
+            results.get(results.size() - depth).add(node.val);
+        }
+        process(node.left, depth + 1, results);
+        process(node.right, depth + 1, results);
+    }
 }

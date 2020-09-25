@@ -46,4 +46,30 @@ public class Code429_LevelOrder {
         }
         return results;
     }
+
+    //第二次提交 使用递归 99.90% 6.73%
+    public List<List<Integer>> levelOrder2(Node root) {
+        List<List<Integer>> results = new ArrayList<List<Integer>>();
+        if(root == null){
+            return results;
+        }
+        process(root, 1, results);
+        return results;
+    }
+
+    public void process(Node node, int depth, List<List<Integer>> results){
+        if(node == null){
+            return;
+        }
+        if(depth == (results.size() + 1)){
+            List<Integer> list = new ArrayList<>();
+            list.add(node.val);
+            results.add(list);
+        }else{
+            results.get(depth - 1).add(node.val);
+        }
+        for(int i = 0; i < node.children.size(); i++){
+            process(node.children.get(i), depth + 1, results);
+        }
+    }
 }
