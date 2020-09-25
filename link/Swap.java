@@ -87,6 +87,41 @@ public class Swap {
         return senti.next;
     }
 
+    //143 不用栈和队列 100% 75.64%
+    public void reorderList(ListNode head) {
+        if(head == null || head.next == null){
+            return;
+        }
+        ListNode p = head;
+        ListNode q = head;
+        while(q != null && q.next != null){
+            p = p.next;
+            q = q.next.next;
+        }
+        ListNode cur = p.next;
+        ListNode mid = p;
+        p.next = null;
+        ListNode temp;
+        while(cur != null){
+            temp = cur.next;
+            cur.next = p;
+            p = cur;
+            cur = temp;
+        }
+        ListNode left = head;
+        ListNode left2 = head.next;
+        ListNode right = p;
+        ListNode right2 = right.next;
+        while(mid != right){
+            left.next = right;
+            right.next = left2;
+            left = left2;
+            left2 = left2.next;
+            right = right2;
+            right2 = right.next;
+        }
+    }
+
     //206
     public ListNode reverseList(ListNode head) {
         //if(head == null || head.next == null){
